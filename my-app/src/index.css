@@ -1,0 +1,25 @@
+/** Syling for the Home pages of the icons */
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 25%;
+}
+
+.aboutImage {
+  height: 100vh;
+  width: 100%;
+  /* Dark overlay + image together */
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.6), 
+      rgba(0, 0, 0, 0.6)
+    ),
+    url("assets/background1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: white;
+}
