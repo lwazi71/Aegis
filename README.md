@@ -36,6 +36,9 @@ Even private accounts aren't truly private, and most users lack tools to **under
 
 We created **Aegis** — a privacy tool that empowers users to analyze and redact sensitive content before it's shared.
 
+![image](https://github.com/user-attachments/assets/e5974baf-2b7a-45f6-af10-af54285e2f97)
+
+
 **What Aegis Does:**
 
 - Upload images or documents for analysis
@@ -70,6 +73,12 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 
 ---
 ### Building
+
+![image](https://github.com/user-attachments/assets/efbc3cb3-255b-45b9-beb2-080ba7d1130a)
+
+![image](https://github.com/user-attachments/assets/3e5bf051-bfb3-4d2e-8baf-6e6cd2093ec3)
+
+![image](https://github.com/user-attachments/assets/9242754d-6fef-469d-b170-679ebe5a2e92)
 
 
 ---
