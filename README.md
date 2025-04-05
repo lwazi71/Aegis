@@ -41,7 +41,7 @@ We created **Aegis Privacy Platform** — a privacy tool that empowers users to 
 
 **What Aegis Does:**
 
-- Upload images or documents for analysis
+- Upload images for analysis
 - AI (GPT-4 + OCR) scans for:
   - Text (addresses, license plates, etc.)
 - Automatically **blur or remove** exposed content
@@ -61,7 +61,7 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 
 ### 💡 How It Works
 
-1. **Upload a file** (image or document)
+1. **Upload a file** (image)
 2. **Choose a prompt** (e.g. “blur license plates”)
 3. Aegis:
    - Extracts content using OCR
