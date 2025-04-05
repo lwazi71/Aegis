@@ -142,7 +142,7 @@ function Home() {
             <h3 className="fs-4 text-body-emphasis">Privacy</h3>
             <p>
               Your Data, Protected by Design - We prioritize privacy at every level.
-              Files are processed securely, never stored, and always handled locally when
+              Files are processed securely, stored securely, and always handled locally when
               possible — because your information belongs to you.
             </p>
           </div>
@@ -166,7 +166,7 @@ function Home() {
             </div>
             <div className="col-md-5 mb-3">
               <p style={{ fontSize: "1.2em" }}>
-                PrivacyGuard AI is built for transparency, speed, and security.
+                Aegis is built for transparency, speed, and security.
                 No data is stored, everything is processed efficiently, and results are
                 delivered in real-time. It's privacy made practical, for everyone.
               </p>
