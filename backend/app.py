@@ -7,7 +7,7 @@ from data import process_image
 app = Flask(__name__)
 
 # ✅ Enable full CORS support for all routes
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
+CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
 
 # === File upload setup ===
 UPLOAD_FOLDER = 'uploads'
