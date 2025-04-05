@@ -13,8 +13,8 @@
   width: 100%;
   /* Dark overlay + image together */
   background: linear-gradient(
-      rgba(0, 0, 0, 0.6), 
-      rgba(0, 0, 0, 0.6)
+      rgba(0, 0, 0, 0.65), 
+      rgba(0, 0, 0, 0.65)
     ),
     url("assets/background1.jpg");
   background-size: cover;
@@ -22,4 +22,19 @@
   background-repeat: no-repeat;
 
   color: white;
+}
+
+:root {
+  --bs-primary: #ff6600;
+  --bs-primary-rgb: 255, 102, 0;
+}
+
+.btn-primary {
+  background-color: #ff6600; 
+  border-color: #ff6600;
+}
+
+.btn-primary:hover {
+  background-color: #e65c00;
+  border-color: #e65c00;
 }

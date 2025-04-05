@@ -46,7 +46,7 @@ function Home() {
             </div>
         </div>
 
-        <div className="container col-xl-10 col-xxl-8 px-4 py-5">
+        <div className="container col-xl-10 col-xxl-8 px-4 py-3">
 
             <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
             <div className="feature col text-center text-lg-start">
@@ -102,7 +102,7 @@ function Home() {
                 </div>
                 </div>
 
-                <a type="button" className="btn btn-primary btn-lg" href="">Check us out</a>
+                <a type="button" className="btn btn-primary btn-lg" href="#floatingInput">Check us out</a>
             </div>
         </div>
 

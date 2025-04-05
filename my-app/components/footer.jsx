@@ -5,7 +5,7 @@ function Footer() {
             <div className="container text-center">
                 <p className="mb-1">&copy; {new Date().getFullYear()} Aegis - All rights reserved.</p>
                 <small className="text-muted">
-                Built with ❤️ at a hackathon 
+                Built at WSU hackathon 
                 </small>
             </div>
         </footer>
