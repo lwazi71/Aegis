@@ -75,9 +75,10 @@ def process():
 
     # Return path to processed image
     return jsonify({
+        "status": "processing",
         "message": "Image processed successfully.",
         "output_path": f"http://localhost:5100/processed/{processed_filename}"
-    })
+    }), 202
 
 # === Serve processed image to frontend ===
 @app.route('/processed/<filename>')

@@ -26,6 +26,7 @@ function Analyze() {
   const [submitted, setSubmitted] = useState(false)
   const [imageOutput, setImageOutput] = useState(null)
   const [textOutput, setTextOutput] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleImageChange = (e) => {
     setSelectedImage(e.target.files[0])
@@ -52,6 +53,7 @@ function Analyze() {
     formData.append("prompt", textInput)
 
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:5100/process", {
         method: "POST",
         body: formData,
@@ -69,6 +71,8 @@ function Analyze() {
     } catch (error) {
       console.error("Error:", error)
       setTextOutput("Error processing image")
+    } finally {
+      setIsLoading(false)
     }
 
     // Clear the inputs
@@ -106,6 +110,15 @@ function Analyze() {
               value={textInput}
               onChange={handleTextChange}
             />
+          </div>
+          
+          <div>
+            {isLoading ? (
+              <div className="loading-spinner">
+                <div className="spinner"></div>
+                <p>Processing image...</p>
+              </div>
+            ) : null }
           </div>
 
           {/* Submit Button */}
