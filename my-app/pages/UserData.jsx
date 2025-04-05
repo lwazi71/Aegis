@@ -6,29 +6,29 @@ function UserData() {
       id: 1,
       original: "/src/testimages/reg.jpeg",
       processed: "/src/testimages/ai.webp",
-      changes: 3,
-      prompt: "Blur out faces and license plates."
+      changes: 2,
+      prompt: "blur our the plate"
     },
     {
       id: 2,
       original: "/src/testimages/reg2.jpg",
       processed: "/src/testimages/ai2.jpg",
-      changes: 2,
-      prompt: "Remove all text from the image."
-    },
-    {
-      id: 4,
-      original: "/src/testimages/reg2.jpg",
-      processed: "/src/testimages/ai2.jpg",
-      changes: 2,
-      prompt: "Remove all text from the image."
+      changes: 1,
+      prompt: "can you blur out the license plate"
     },
     {
       id: 3,
-      original: "/src/testimages/reg.jpeg",
-      processed: "/src/testimages/ai.webp",
-      changes: 3,
-      prompt: "Blur out faces and license plates."
+      original: "/src/testimages/reg4.webp",
+      processed: "/src/testimages/ai4.png",
+      changes: 2,
+      prompt: "can you blur out all the location on this image"
+    },
+    {
+      id: 4,
+      original: "/src/testimages/reg6.webp",
+      processed: "/src/testimages/ai6.png",
+      changes: 2,
+      prompt: "blur out the the address on the map"
     }
   ];
 
