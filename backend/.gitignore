@@ -3,4 +3,4 @@
 processed
 uploads
 __pycache__
-**/_metadata.json
+my-app/node_modules/.vite/deps/_metadata.json
