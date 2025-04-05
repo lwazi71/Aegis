@@ -1,13 +1,26 @@
 from flask import Flask, request, jsonify, send_from_directory, make_response
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import uuid
+import re
 from data import process_image
 
 app = Flask(__name__)
+# === PostgreSQL Connection (GCP Cloud SQL) ===
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aegisadmin:coughacks@34.169.11.69:5432/postgres'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# === User Model ===
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
 
 # ✅ Enable full CORS support for all routes
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
 # === File upload setup ===
 UPLOAD_FOLDER = 'uploads'
@@ -15,9 +28,17 @@ PROCESSED_FOLDER = 'processed'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 
-# === Preflight OPTIONS route for CORS ===
+# === Preflight OPTIONS routes for CORS ===
 @app.route('/process', methods=['OPTIONS'])
 def options():
+    response = make_response()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
+@app.route('/verify', methods=['OPTIONS'])
+def verify_options():
     response = make_response()
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
@@ -70,6 +91,39 @@ def apply_cors(response):
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     return response
+
+# === User verification + creation endpoint ===
+@app.route('/verify', methods=['POST'])
+def verify_user():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Missing email or password"}), 400
+
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return jsonify({"error": "Invalid email format"}), 400
+    if len(password) < 6:
+        return jsonify({"error": "Password too short"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        if check_password_hash(user.password_hash, password):
+            return jsonify({"message": "✅ User verified and exists in DB"})
+        else:
+            return jsonify({"error": "❌ Incorrect password"}), 401
+    else:
+        hashed_pw = generate_password_hash(password)
+        new_user = User(email=email, password_hash=hashed_pw)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"message": "✅ User did not exist, created successfully"})
+
+# === Ensure tables exist before server starts ===
+with app.app_context():
+    db.create_all()
 
 # === Start Flask server ===
 if __name__ == '__main__':

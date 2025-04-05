@@ -100,15 +100,37 @@ function Analyze() {
       </form>
 
       {submitted && (
-        <div className="container py-5 text-center">
-          <h1 className="mb-4">{textOutput}</h1>
-          {imageOutput && (
+      <div className="container py-5 text-center">
+        <h1 className="mb-4">{textOutput}</h1>
+        {imageOutput && (
+          <div>
             <div>
-                <img src={imageOutput} alt="Preview" style={{ width: "50%", borderRadius: "8px" }} />
+              <img
+                src={imageOutput}
+                alt="Preview"
+                style={{ width: "50%", borderRadius: "8px" }}
+              />
             </div>
-          )}
-        </div>
-      )}
+
+            <div className="d-flex justify-content-center mt-4">
+              <button
+                type="button"
+                onClick={handleImageDownload}
+                className="icon-circle bg-primary text-white d-flex justify-content-center align-items-center"
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '50%',
+                  border: 'none',
+                }}
+              >
+                <i className="bi bi-download fs-2"></i>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    )}
     </div>
   )
 }
