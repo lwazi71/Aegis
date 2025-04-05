@@ -42,37 +42,18 @@ function Analyze() {
 
     // Debug outputs
     console.log("hi")
-    console.log("Selected Image:", selectedImage)
-    console.log("Text Input:", textInput)
+    console.log('Selected Image:', selectedImage)
+    console.log('Text Input:', textInput)
 
-    // Create FormData to send file and prompt to the backend
-    const formData = new FormData()
-    if (selectedImage) {
-      formData.append("file", selectedImage)
-    }
-    formData.append("prompt", textInput)
 
-    try {
-      const response = await fetch("http://localhost:5100/process", {
-        method: "POST",
-        body: formData,
-      })
+    
+    // Here you can send data to your AI API / backend
+    setTextOutput("testing text input")
+    setImageOutput(URL.createObjectURL(selectedImage))
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok")
-      }
 
-      const data = await response.json()
-      console.log("Response from backend:", data)
-      setTextOutput(data.message || "Processed successfully!")
-      // Assume backend returns a URL or path for the processed image.
-      setImageOutput(data.output_path || null)
-    } catch (error) {
-      console.error("Error:", error)
-      setTextOutput("Error processing image")
-    }
 
-    // Clear the inputs
+    //clear the inputs
     setSelectedImage(null)
     setTextInput("")
     setSubmitted(true)
@@ -123,30 +104,7 @@ function Analyze() {
           <h1 className="mb-4">{textOutput}</h1>
           {imageOutput && (
             <div>
-              <div>
-              <img
-                src={imageOutput}
-                alt="Processed Output"
-                style={{ width: "50%", borderRadius: "8px" }}
-              />
-              </div>
-
-            <div className="d-flex justify-content-center mt-3">
-              <button
-                type="button"
-                onClick={handleImageDownload}
-                className="icon-circle bg-primary text-white d-flex justify-content-center align-items-center mb-4"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  border: 'none',
-                }}
-              >
-                <i className="bi bi-download fs-2"></i>
-              </button>
-            </div>            
-
+                <img src={imageOutput} alt="Preview" style={{ width: "50%", borderRadius: "8px" }} />
             </div>
           )}
         </div>
