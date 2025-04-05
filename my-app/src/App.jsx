@@ -3,6 +3,7 @@ import Navbar from '../components/navbar'
 import Home from '../pages/Home'
 import UserData from '../pages/UserData'
 import Analyze from '../pages/Analyze'
+import Footer from '../components/footer'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/userdata" element={<UserData />} />
         <Route path="/analyze" element={<Analyze />} />
       </Routes>
+      <Footer/>
     </>
   )
 }

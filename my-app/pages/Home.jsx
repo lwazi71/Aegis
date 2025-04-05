@@ -102,7 +102,7 @@ function Home() {
                 </div>
                 </div>
 
-                <button type="button" className="btn btn-primary btn-lg">Check us out</button>
+                <a type="button" className="btn btn-primary btn-lg" href="">Check us out</a>
             </div>
         </div>
 

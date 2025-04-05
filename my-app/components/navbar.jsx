@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">PrivacyGuard AI</Link>
+        <Link className="navbar-brand fw-bold" to="/">Aegis</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon" />
         </button>
@@ -16,10 +16,10 @@ function Navbar() {
               <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === '/userdata' ? 'active' : ''}`} to="/userdata">User Data</Link>
+              <Link className={`nav-link ${location.pathname === '/analyze' ? 'active' : ''}`} to="/analyze">Analyze</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === '/analyze' ? 'active' : ''}`} to="/analyze">Analyze</Link>
+              <Link className={`nav-link ${location.pathname === '/userdata' ? 'active' : ''}`} to="/userdata">User Data</Link>
             </li>
           </ul>
         </div>
