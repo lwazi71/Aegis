@@ -31,7 +31,7 @@ def gpt_should_blur(ocr_text, user_prompt):
         return False
 
 # === Main image processing function ===
-def process_image(input_path, output_path, prompt="blur out only sensitive information from the image. Nothing else"):
+def process_image(input_path, output_path, prompt="blur out all text from the image"):
     if not os.path.exists(input_path):
         print(f"❌ Image not found: {input_path}")
         return False
