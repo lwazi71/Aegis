@@ -20,7 +20,6 @@ function Analyze() {
       alert("Download failed.")
     }
   }
-  
 
   const [selectedImage, setSelectedImage] = useState(null)
   const [textInput, setTextInput] = useState("")
@@ -42,18 +41,37 @@ function Analyze() {
 
     // Debug outputs
     console.log("hi")
-    console.log('Selected Image:', selectedImage)
-    console.log('Text Input:', textInput)
+    console.log("Selected Image:", selectedImage)
+    console.log("Text Input:", textInput)
 
+    // Create FormData to send file and prompt to the backend
+    const formData = new FormData()
+    if (selectedImage) {
+      formData.append("file", selectedImage)
+    }
+    formData.append("prompt", textInput)
 
-    
-    // Here you can send data to your AI API / backend
-    setTextOutput("testing text input")
-    setImageOutput(URL.createObjectURL(selectedImage))
+    try {
+      const response = await fetch("http://localhost:5100/process", {
+        method: "POST",
+        body: formData,
+      })
 
+      if (!response.ok) {
+        throw new Error("Network response was not ok")
+      }
 
+      const data = await response.json()
+      console.log("Response from backend:", data)
+      setTextOutput(data.message || "Processed successfully!")
+      // Assume backend returns a URL or path for the processed image.
+      setImageOutput(data.output_path || null)
+    } catch (error) {
+      console.error("Error:", error)
+      setTextOutput("Error processing image")
+    }
 
-    //clear the inputs
+    // Clear the inputs
     setSelectedImage(null)
     setTextInput("")
     setSubmitted(true)
