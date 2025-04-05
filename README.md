@@ -1,8 +1,6 @@
 # Aegis – CougHacks 2025 Project  
-**Protecting Your Digital Identity Online**  
-Built for the "Privacy and Online Presence" theme at CougHacks 2025
 
----
+## By Duy Ly, Lwazi Mobata, Yusuf Shakhpaz, Murad Tair, Bhavneet Bhargava, and Alex Douk.
 
 ## The Prompt
 
