@@ -118,3 +118,7 @@ cd frontend
 npm install
 npm run dev
 ```
+### Behind the Scenes
+![image](https://github.com/user-attachments/assets/458fdce1-eca0-49dd-a871-d1cf9dee38aa)
+![image](https://github.com/user-attachments/assets/680ddd5c-d756-4738-8da1-fecaa40784ef)
+
