@@ -32,7 +32,7 @@ function Analyze() {
     formData.append("prompt", textInput)
 
     try {
-      const response = await fetch("http://localhost:5000/process", {
+      const response = await fetch("http://localhost:5100/process", {
         method: "POST",
         body: formData,
       })
