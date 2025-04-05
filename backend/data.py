@@ -1,11 +1,12 @@
 import cv2
 import easyocr
-import matplotlib.pyplot as plt
 import openai
 import os
+import re
+from PIL import Image
 from dotenv import load_dotenv
 
-load_dotenv()  # Loads .env from current directory or parent directories
+load_dotenv()  # Load environment variables from .env
 openai.api_key = os.getenv("API_KEY")
 
 # === Function to ask GPT if a piece of text matches the user's prompt ===
@@ -31,25 +32,22 @@ def gpt_should_blur(ocr_text, user_prompt):
         print("❌ GPT error:", e)
         return False
 
-# === Main image processor ===
-def process_image(image_path=None, prompt="blur out only license plate information from the image. Nothing else"):
+# === Main image processing function ===
+def process_image(input_path, output_path, prompt="blur out only license plate information from the image. Nothing else"):
+    if not os.path.exists(input_path):
+        print(f"❌ Image not found: {input_path}")
+        return False
 
-    # Update path if passed in via argument
-    if image_path is None:
-        image_path = "dre_car.jpeg"
-
-    img = cv2.imread(image_path)
-
+    img = cv2.imread(input_path)
     if img is None:
-        print("❌ Image not found.")
-        return
+        print("❌ Failed to load image.")
+        return False
 
-    reader = easyocr.Reader(['en'])
-    text = reader.readtext(img)
+    # Create an instance of EasyOCR reader
+    reader = easyocr.Reader(['en'], gpu=False)
+    ocr_results = reader.readtext(img)
 
-    for _, t in enumerate(text):
-        bbox, ocr_text, score = t
-
+    for bbox, ocr_text, score in ocr_results:
         if score < 0.2:
             continue
 
@@ -57,34 +55,19 @@ def process_image(image_path=None, prompt="blur out only license plate informati
 
         if gpt_should_blur(ocr_text, prompt):
             print("🔒 GPT says: Blur this.")
-
+            # Compute bounding box coordinates
             x_min = int(min(bbox[0][0], bbox[1][0]))
             y_min = int(min(bbox[0][1], bbox[1][1]))
             x_max = int(max(bbox[2][0], bbox[3][0]))
             y_max = int(max(bbox[2][1], bbox[3][1]))
 
             crop_area = img[y_min:y_max, x_min:x_max]
-
             blurred_area = cv2.GaussianBlur(crop_area, (75, 75), 0)
             blurred_area = cv2.GaussianBlur(blurred_area, (75, 75), 0)
-
             img[y_min:y_max, x_min:x_max] = blurred_area
         else:
             print("✅ GPT says: Leave it.")
 
-    # Show result
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    plt.title("Blurred Result")
-    plt.axis('off')
-    plt.show()
-
-    print("✅ Image processing complete.")
-
-# === Optional endpoint simulation ===
-def process_text():
-    print(f"Blurred sensitive info:")
-
-# === Run manually for now ===
-if __name__ == "__main__":
-    process_text()
-    process_image()
+    cv2.imwrite(output_path, img)
+    print(f"✅ Image processed and saved to {output_path}")
+    return True
