@@ -2,12 +2,14 @@ from flask import Flask, request, jsonify, send_from_directory, make_response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 import os
 import uuid
 import re
 from data import process_image
-
+from sqlalchemy import inspect
 app = Flask(__name__)
+
 # === PostgreSQL Connection (GCP Cloud SQL) ===
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://aegisadmin:coughacks@34.169.11.69:5432/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -15,14 +17,18 @@ db = SQLAlchemy(app)
 
 # === User Model ===
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'master_users'
+    user_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
+    phone_number = db.Column(db.String(20))
+    posts = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-# ✅ Enable full CORS support for all routes
+# ✅ Enable full CORS support
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
-# === File upload setup ===
+# === File upload folders ===
 UPLOAD_FOLDER = 'uploads'
 PROCESSED_FOLDER = 'processed'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -45,7 +51,7 @@ def verify_options():
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
 
-# === Actual image processing route ===
+# === Image processing route ===
 @app.route('/process', methods=['POST'])
 def process():
     print("🔥 Received POST request to /process")
@@ -62,18 +68,17 @@ def process():
     upload_path = os.path.join(UPLOAD_FOLDER, unique_filename)
     file.save(upload_path)
 
-    # Get user prompt
+    # Get prompt
     prompt = request.form.get("prompt", "blur out only license plate information from the image. Nothing else")
 
     # Output path
     processed_filename = f"blurred_{unique_filename}"
     processed_path = os.path.join(PROCESSED_FOLDER, processed_filename)
 
-    # Process the image
+    # Process image
     if not process_image(upload_path, processed_path, prompt):
         return jsonify({"error": "Image processing failed."}), 500
 
-    # Return path to processed image
     return jsonify({
         "message": "Image processed successfully.",
         "output_path": f"http://localhost:5100/processed/{processed_filename}"
@@ -84,7 +89,7 @@ def process():
 def serve_processed_file(filename):
     return send_from_directory(PROCESSED_FOLDER, filename)
 
-# === Ensure every response includes CORS headers ===
+# === CORS headers on all responses ===
 @app.after_request
 def apply_cors(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
@@ -92,7 +97,7 @@ def apply_cors(response):
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     return response
 
-# === User verification + creation endpoint ===
+# === User verification & creation ===
 @app.route('/verify', methods=['POST'])
 def verify_user():
     data = request.get_json()
@@ -101,7 +106,6 @@ def verify_user():
 
     if not email or not password:
         return jsonify({"error": "Missing email or password"}), 400
-
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return jsonify({"error": "Invalid email format"}), 400
     if len(password) < 6:
@@ -121,10 +125,14 @@ def verify_user():
         db.session.commit()
         return jsonify({"message": "✅ User did not exist, created successfully"})
 
-# === Ensure tables exist before server starts ===
 with app.app_context():
-    db.create_all()
-
+    inspector = inspect(db.engine)
+    tables = inspector.get_table_names()
+    if 'master_users' not in tables:
+        print("⛏️ Creating 'master_users' table in DB...")
+        db.create_all()
+    else:
+        print("✅ 'master_users' table already exists.")
 # === Start Flask server ===
 if __name__ == '__main__':
     print("🚀 Running Flask backend on http://localhost:5100")
