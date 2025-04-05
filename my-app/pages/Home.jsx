@@ -1,22 +1,30 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const res = await axios.post("http://localhost:5100/verify", {
         email,
         password,
       });
-
-      alert(res.data.message || "Success!");
+  
+      if (res.data.message) {
+        // 🔥 Reset the form fields
+        setEmail("");
+        setPassword("");
+  
+        // ✅ Navigate to /analyze
+        navigate("/analyze");
+      }
     } catch (err) {
-      alert(err.response?.data?.error || "Something went wrong.");
+      console.error(err.response?.data?.error || "Something went wrong.");
     }
   };
 
