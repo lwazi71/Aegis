@@ -1,8 +1,6 @@
 // working login/sign up page
 
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function Home() {
   //original
@@ -14,16 +12,11 @@ function Home() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("email"));
 
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5100/verify", {
-        email,
-        password,
-      });
 
       // Remove alert pop-up
       localStorage.setItem("email", email);
