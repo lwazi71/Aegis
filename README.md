@@ -70,7 +70,7 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 
 ---
 ### Building
-![compressed_image](https://github.com/user-attachments/assets/f240ff82-31f6-4d7d-9e9a-599a9041618a)
+
 
 ---
 
