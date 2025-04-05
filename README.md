@@ -1,4 +1,4 @@
-# Aegis – CougHacks 2025 Project  
+# Aegis Privacy Platform – CougHacks 2025 Project  
 
 ## By Duy Ly, Lwazi Mabota, Yusuf Shakhpaz, Murad Tair, Bhavneet Bhargava, and Alex Douk
 
@@ -18,11 +18,11 @@ How can we share what we love without giving away too much?
 
 Social media platforms and websites collect a **massive amount of personal and sensitive data**, often without users fully realizing it. This includes:
 
-- 🎂 Name, birthday, gender, contact info  
-- 🌍 Location and check-in data  
-- 🧠 Attitudinal + behavioral patterns (likes, comments, interactions)  
-- 🙏 Beliefs, preferences, opinions  
-- 📸 Shared content, images, and videos
+- Name, birthday, gender, contact info  
+- Location and check-in data  
+- Attitudinal + behavioral patterns (likes, comments, interactions)  
+- Beliefs, preferences, opinions  
+- Shared content, images, and videos
 
 This data is sold to advertisers, but it's also exploited by **scammers and fraudsters**:
 
@@ -34,7 +34,7 @@ Even private accounts aren't truly private, and most users lack tools to **under
 
 ## Our Solution: Aegis
 
-We created **Aegis** — a privacy tool that empowers users to analyze and redact sensitive content before it's shared.
+We created **Aegis Privacy Platform** — a privacy tool that empowers users to analyze and redact sensitive content before it's shared.
 
 ![image](https://github.com/user-attachments/assets/e5974baf-2b7a-45f6-af10-af54285e2f97)
 
@@ -43,9 +43,7 @@ We created **Aegis** — a privacy tool that empowers users to analyze and redac
 
 - Upload images or documents for analysis
 - AI (GPT-4 + OCR) scans for:
-  - Faces
-  - Text (names, IDs, emails, etc.)
-  - Personal identifiers
+  - Text (addresses, license plates, etc.)
 - Automatically **blur or remove** exposed content
 - Get an **Insights dashboard** showing:
   - What was flagged
@@ -83,13 +81,13 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 
 ---
 
-### 🧪 Features
+### Features
 
-- ✅ User login + data persistence
-- 📸 Before/After image preview
-- 🧠 GPT-4 powered text reasoning
-- 🧾 Insights dashboard with usage stats
-- 🗂️ User-specific activity history (WIP)
+- User login + data persistence
+- Before/After image preview
+- GPT-4 powered text reasoning
+- Insights dashboard with usage stats
+- User-specific activity history (WIP)
 
 ---
 
@@ -101,7 +99,7 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 
 ---
 
-### 🚀 How to Run Locally
+### How to Run Locally
 
 **Backend (Flask):**
 ```bash
