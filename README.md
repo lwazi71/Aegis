@@ -1,6 +1,6 @@
 # Aegis – CougHacks 2025 Project  
 
-## By Duy Ly, Lwazi Mabota, Yusuf Shakhpaz, Murad Tair, Bhavneet Bhargava, and Alex Douk.
+## By Duy Ly, Lwazi Mabota, Yusuf Shakhpaz, Murad Tair, Bhavneet Bhargava, and Alex Douk
 
 ## The Prompt
 
