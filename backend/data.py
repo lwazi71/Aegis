@@ -42,7 +42,7 @@ def process_image(input_path, output_path, prompt="blur out only sensitive infor
         return False
 
     # Create an instance of EasyOCR reader
-    reader = easyocr.Reader(['en'], gpu=False)
+    reader = easyocr.Reader(['en', 'de', 'es', 'fr', 'la', 'pt', 'tr', 'vi'])
     read_text = reader.readtext(img)
 
     for bbox, text, score in read_text:
