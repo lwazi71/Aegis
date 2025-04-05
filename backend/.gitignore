@@ -4,7 +4,6 @@ backend/__pycache__/
 backend/uploads/
 backend/processed/
 
-# Also ignore these patterns anywhere in the project
 **/__pycache__/
 **/uploads/
 **/processed/
