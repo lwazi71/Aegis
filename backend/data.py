@@ -43,9 +43,9 @@ def process_image(input_path, output_path, prompt="blur out only sensitive infor
 
     # Create an instance of EasyOCR reader
     reader = easyocr.Reader(['en'], gpu=False)
-    ocr_results = reader.readtext(img)
+    read_text = reader.readtext(img)
 
-    for bbox, text, score in ocr_results:
+    for bbox, text, score in read_text:
 
         print(f"🧠 OCR found: '{text}' (score {score:.2f})")
 
