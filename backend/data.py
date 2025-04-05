@@ -2,8 +2,6 @@ import cv2
 import easyocr
 import openai
 import os
-import re
-from PIL import Image
 from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env
@@ -33,7 +31,7 @@ def gpt_should_blur(ocr_text, user_prompt):
         return False
 
 # === Main image processing function ===
-def process_image(input_path, output_path, prompt="blur out only license plate information from the image. Nothing else"):
+def process_image(input_path, output_path, prompt="blur out only sensitive information from the image. Nothing else"):
     if not os.path.exists(input_path):
         print(f"❌ Image not found: {input_path}")
         return False
@@ -47,23 +45,24 @@ def process_image(input_path, output_path, prompt="blur out only license plate i
     reader = easyocr.Reader(['en'], gpu=False)
     ocr_results = reader.readtext(img)
 
-    for bbox, ocr_text, score in ocr_results:
-        if score < 0.2:
-            continue
+    for bbox, text, score in ocr_results:
 
-        print(f"🧠 OCR found: '{ocr_text}' (score {score:.2f})")
+        print(f"🧠 OCR found: '{text}' (score {score:.2f})")
 
-        if gpt_should_blur(ocr_text, prompt):
+        if gpt_should_blur(text, prompt):
             print("🔒 GPT says: Blur this.")
-            # Compute bounding box coordinates
+            
             x_min = int(min(bbox[0][0], bbox[1][0]))
             y_min = int(min(bbox[0][1], bbox[1][1]))
+
             x_max = int(max(bbox[2][0], bbox[3][0]))
             y_max = int(max(bbox[2][1], bbox[3][1]))
 
             crop_area = img[y_min:y_max, x_min:x_max]
+
             blurred_area = cv2.GaussianBlur(crop_area, (75, 75), 0)
             blurred_area = cv2.GaussianBlur(blurred_area, (75, 75), 0)
+
             img[y_min:y_max, x_min:x_max] = blurred_area
         else:
             print("✅ GPT says: Leave it.")
