@@ -41,7 +41,8 @@ function UserData() {
 
   return (
     <div className="container py-5">
-      <h1 className="text-center mb-5">Your Dashboard</h1>
+      {/* Changed dashboard to results */}
+      <h1 className="text-center mb-5">Your Recent Activity</h1>
 
       <div className="row g-4 text-center mb-5">
         <div className="col-md-6">
