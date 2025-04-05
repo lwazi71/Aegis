@@ -1,4 +1,4 @@
-# Aegis – CougHacks 2025 Project  
+![image](https://github.com/user-attachments/assets/1f127bd1-baed-4ba2-a3cb-c8611513f760)# Aegis – CougHacks 2025 Project  
 
 ## By Duy Ly, Lwazi Mobata, Yusuf Shakhpaz, Murad Tair, Bhavneet Bhargava, and Alex Douk.
 
@@ -67,6 +67,9 @@ It bridges the gap between **self-expression** and **data control**, allowing us
    - Asks GPT-4 what to blur
    - Applies redaction locally via OpenCV
 4. View changes + review logs in your **Insights tab**
+
+---
+### Building
 
 ---
 
