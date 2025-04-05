@@ -42,7 +42,7 @@ We created **Aegis Privacy Platform** — a privacy tool that empowers users to 
 **What Aegis Does:**
 
 - Upload images for analysis
-- AI (GPT-4 + OCR) scans for:
+- Through user input, AI (GPT-4 + OCR) scans for:
   - Text (addresses, license plates, etc.)
 - Automatically **blur or remove** exposed content
 - Get an **Insights dashboard** showing:
@@ -62,11 +62,11 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 ### 💡 How It Works
 
 1. **Upload a file** (image)
-2. **Choose a prompt** (e.g. “blur license plates”)
+2. **Make a prompt** (e.g. “blur license plate”)
 3. Aegis:
    - Extracts content using OCR
-   - Asks GPT-4 what to blur
-   - Applies redaction locally via OpenCV
+   - Asks GPT-4 what to blur, building bounding boxes in coordinates
+   - Applies redaction locally via OpenCV, thus blurring according to the bounding boxes
 4. View changes + review logs in your **Insights tab**
 
 ---
@@ -95,7 +95,7 @@ It bridges the gap between **self-expression** and **data control**, allowing us
 
 | Frontend   | Backend    | AI/ML        | DB / Storage      |
 |------------|------------|--------------|-------------------|
-| React + Bootstrap | Flask + SQLAlchemy | GPT-4 + EasyOCR | PostgreSQL + Local File Storage |
+| React + Bootstrap | Flask + SQLAlchemy + OpenCV | OpenAI/GPT-4 + EasyOCR | PostgreSQL + GCP + CloudSQL|
 
 ---
 
@@ -107,7 +107,7 @@ cd backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python app.py
+python3 app.py
 ```
 
 **Frontend (React)**
