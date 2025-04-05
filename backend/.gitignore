@@ -1,0 +1,5 @@
+*.env
+.venv
+processed
+uploads
+__pycache__
