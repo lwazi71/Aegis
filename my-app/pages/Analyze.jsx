@@ -1,6 +1,27 @@
 import { useState } from 'react'
 
 function Analyze() {
+
+  const handleImageDownload = async () => {
+    try {
+      const response = await fetch(imageOutput)
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+  
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'ai-detected-image.png'
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error("Failed to download image:", err)
+      alert("Download failed.")
+    }
+  }
+  
+
   const [selectedImage, setSelectedImage] = useState(null)
   const [textInput, setTextInput] = useState("")
   const [submitted, setSubmitted] = useState(false)
@@ -102,19 +123,30 @@ function Analyze() {
           <h1 className="mb-4">{textOutput}</h1>
           {imageOutput && (
             <div>
+              <div>
               <img
                 src={imageOutput}
                 alt="Processed Output"
                 style={{ width: "50%", borderRadius: "8px" }}
               />
-              <a
-                href={imageOutput}
-                download="ai-detected-image.png"
+              </div>
+
+            <div className="d-flex justify-content-center mt-3">
+              <button
                 type="button"
-                className="mt-3 btn btn-secondary"
+                onClick={handleImageDownload}
+                className="icon-circle bg-primary text-white d-flex justify-content-center align-items-center mb-4"
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '50%',
+                  border: 'none',
+                }}
               >
-                Download Image
-              </a>
+                <i className="bi bi-download fs-2"></i>
+              </button>
+            </div>            
+
             </div>
           )}
         </div>
