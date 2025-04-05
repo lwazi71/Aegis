@@ -57,3 +57,51 @@ Aegis gives users visibility into their digital footprint before it becomes publ
 It bridges the gap between **self-expression** and **data control**, allowing users to stay safe while staying social.
 
 ---
+
+### 💡 How It Works
+
+1. **Upload a file** (image or document)
+2. **Choose a prompt** (e.g. “blur license plates”)
+3. Aegis:
+   - Extracts content using OCR
+   - Asks GPT-4 what to blur
+   - Applies redaction locally via OpenCV
+4. View changes + review logs in your **Insights tab**
+
+---
+
+### 🧪 Features
+
+- ✅ User login + data persistence
+- 📸 Before/After image preview
+- 🧠 GPT-4 powered text reasoning
+- 🧾 Insights dashboard with usage stats
+- 🗂️ User-specific activity history (WIP)
+
+---
+
+### 🛠️ Tech Stack
+
+| Frontend   | Backend    | AI/ML        | DB / Storage      |
+|------------|------------|--------------|-------------------|
+| React + Bootstrap | Flask + SQLAlchemy | GPT-4 + EasyOCR | PostgreSQL + Local File Storage |
+
+---
+
+### 🚀 How to Run Locally
+
+**Backend (Flask):**
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+**Frontend (React)**
+```bash
+cd frontend
+npm install
+npm run dev
+```
