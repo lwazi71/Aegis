@@ -1,13 +1,9 @@
 import { useState } from 'react'
 
-let textOutput
-let imageOutput
-
 function Analyze() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [textInput, setTextInput] = useState("")
   const [submitted, setSubmitted] = useState(false)
-
   const [imageOutput, setImageOutput] = useState(null)
   const [textOutput, setTextOutput] = useState("")
 
@@ -19,24 +15,43 @@ function Analyze() {
     setTextInput(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     alert("Form submitted!")
 
     // Debug outputs
     console.log("hi")
-    console.log('Selected Image:', selectedImage)
-    console.log('Text Input:', textInput)
+    console.log("Selected Image:", selectedImage)
+    console.log("Text Input:", textInput)
 
+    // Create FormData to send file and prompt to the backend
+    const formData = new FormData()
+    if (selectedImage) {
+      formData.append("file", selectedImage)
+    }
+    formData.append("prompt", textInput)
 
-    
-    // Here you can send data to your AI API / backend
-    setTextOutput("testing text input")
-    setImageOutput(URL.createObjectURL(selectedImage))
+    try {
+      const response = await fetch("http://localhost:5000/process", {
+        method: "POST",
+        body: formData,
+      })
 
+      if (!response.ok) {
+        throw new Error("Network response was not ok")
+      }
 
+      const data = await response.json()
+      console.log("Response from backend:", data)
+      setTextOutput(data.message || "Processed successfully!")
+      // Assume backend returns a URL or path for the processed image.
+      setImageOutput(data.output_path || null)
+    } catch (error) {
+      console.error("Error:", error)
+      setTextOutput("Error processing image")
+    }
 
-    //clear the inputs
+    // Clear the inputs
     setSelectedImage(null)
     setTextInput("")
     setSubmitted(true)
@@ -81,15 +96,29 @@ function Analyze() {
           </div>
         </div>
       </form>
+
       {submitted && (
         <div className="container py-5 text-center">
-            <h1 className="mb-4">{textOutput}</h1>
+          <h1 className="mb-4">{textOutput}</h1>
+          {imageOutput && (
             <div>
-                <img src={imageOutput} alt="Preview" style={{ width: "50%", borderRadius: "8px" }} />
+              <img
+                src={imageOutput}
+                alt="Processed Output"
+                style={{ width: "50%", borderRadius: "8px" }}
+              />
+              <a
+                href={imageOutput}
+                download="ai-detected-image.png"
+                type="button"
+                className="mt-3 btn btn-secondary"
+              >
+                Download Image
+              </a>
             </div>
-            <a href={imageOutput} download="ai-detected-image.png" type="button" className="mt-3"> Download Image</a>      
+          )}
         </div>
-        )}
+      )}
     </div>
   )
 }
